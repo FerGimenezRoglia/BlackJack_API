@@ -1,0 +1,18 @@
+
+{
+  "_id": "60595a4f6c8f3b1f88e9a07a",
+  "gameId": "550e8400-e29b-41d4-a716-446655440000",
+  "playerId": "123e4567-e89b-12d3-a456-426614174000",
+  "playerCards": [
+    { "suit": "HEARTS", "rank": "TEN" },
+    { "suit": "SPADES", "rank": "THREE" }
+  ],
+  "dealerCards": [
+    { "suit": "DIAMONDS", "rank": "QUEEN" },
+    { "suit": "CLUBS", "rank": "FIVE" }
+  ],
+  "gameResult": "FINISHED",
+  "winnerId": "DEALER",
+  "winnerType": "DEALER",
+  "timestamp": "2025-03-10T12:05:00Z"
+}
