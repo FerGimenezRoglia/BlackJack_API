@@ -1,5 +1,7 @@
 package cat.itacademy.s05.t01.n01.service.impl;
 
+import cat.itacademy.s05.t01.n01.exception.DuplicatePlayerException;
+import cat.itacademy.s05.t01.n01.exception.InvalidActionException;
 import cat.itacademy.s05.t01.n01.exception.PlayerNotFoundException;
 import cat.itacademy.s05.t01.n01.model.Player;
 import cat.itacademy.s05.t01.n01.repository.PlayerRepository;
@@ -51,5 +53,28 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public Flux<Player> getRanking() {
         return playerRepository.findTop10ByOrderByTotalWinsDesc();
+    }
+
+    /**
+     * Obtiene un jugador por nombre e ID si existe, o lo crea si no existe.
+     * @param playerName Nombre del jugador.
+     * @return Mono con el jugador encontrado o creado.
+     */
+    @Override
+    public Mono<Player> getOrCreatePlayer(String playerName) {
+        if (playerName == null || playerName.isBlank()) {
+            return Mono.error(new InvalidActionException("El nombre del jugador no puede estar vacío"));
+        }
+        return playerRepository.findByName(playerName)
+                .flatMap(existingPlayer -> Mono.<Player>error(new DuplicatePlayerException("El jugador '" + playerName + "' ya existe.")))
+                .switchIfEmpty(createAndSavePlayer(playerName));
+    }
+
+    /**
+     * 📌 Método auxiliar para crear y guardar un nuevo jugador
+     */
+    private Mono<Player> createAndSavePlayer(String playerName) {
+        Player newPlayer = new Player(UUID.randomUUID(), playerName, 0, 0);
+        return playerRepository.save(newPlayer);
     }
 }

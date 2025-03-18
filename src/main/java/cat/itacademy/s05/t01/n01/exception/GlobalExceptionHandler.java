@@ -42,6 +42,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
+    @ExceptionHandler(DuplicatePlayerException.class)
+    public ResponseEntity<String> handleDuplicatePlayerException(DuplicatePlayerException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
     /**
      * Maneja intentos de acciones inválidas en el juego.
      * @param ex Excepción de acción inválida.

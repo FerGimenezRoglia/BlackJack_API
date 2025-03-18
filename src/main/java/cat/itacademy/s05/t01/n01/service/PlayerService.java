@@ -25,4 +25,7 @@ public interface PlayerService {
      * @return Flux con los jugadores ordenados por ranking.
      */
     Flux<Player> getRanking();
+
+    Mono<Player> getOrCreatePlayer(String playerName);
+
 }
