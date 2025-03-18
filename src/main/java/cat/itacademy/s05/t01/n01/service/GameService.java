@@ -26,6 +26,8 @@ public interface GameService {
      */
     Mono<Game> getGameById(UUID gameId);
 
+    Mono<Game> playGame(UUID gameId, String action);
+
     /**
      * 📌 Elimina una partida específica.
      * @param gameId ID de la partida a eliminar.
