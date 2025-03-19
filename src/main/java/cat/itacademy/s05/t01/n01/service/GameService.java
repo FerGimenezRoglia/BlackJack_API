@@ -1,6 +1,8 @@
 package cat.itacademy.s05.t01.n01.service;
 
 import cat.itacademy.s05.t01.n01.model.Game;
+import cat.itacademy.s05.t01.n01.model.GameHistory;
+import cat.itacademy.s05.t01.n01.model.Player;
 import cat.itacademy.s05.t01.n01.model.enums.GameStatus;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -34,6 +36,13 @@ public interface GameService {
      * @return Mono vacío si la operación es exitosa.
      */
     Mono<Void> deleteGame(UUID gameId);
+
+    /**
+     * 📌 Obtiene el historial de partidas de un jugador en MongoDB.
+     * @param playerId ID del jugador.
+     * @return Flux con el historial de partidas.
+     */
+    Flux<GameHistory> getPlayerHistory(UUID playerId);
 
     /**
      * 📌 Obtiene todas las partidas según su estado (IN_PROGRESS, FINISHED).

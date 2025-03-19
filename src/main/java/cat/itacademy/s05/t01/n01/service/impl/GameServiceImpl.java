@@ -2,10 +2,7 @@ package cat.itacademy.s05.t01.n01.service.impl;
 
 import cat.itacademy.s05.t01.n01.exception.GameNotFoundException;
 import cat.itacademy.s05.t01.n01.exception.InvalidActionException;
-import cat.itacademy.s05.t01.n01.model.Card;
-import cat.itacademy.s05.t01.n01.model.Game;
-import cat.itacademy.s05.t01.n01.model.GameHistory;
-import cat.itacademy.s05.t01.n01.model.PlayerGame;
+import cat.itacademy.s05.t01.n01.model.*;
 import cat.itacademy.s05.t01.n01.model.enums.GameStatus;
 import cat.itacademy.s05.t01.n01.model.enums.PlayerAction;
 import cat.itacademy.s05.t01.n01.repository.GameRepository;
@@ -124,15 +121,32 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Mono<Void> deleteGame(UUID gameId) {
-        return null;
+        if (gameId == null) {
+            return Mono.error(new InvalidActionException("El ID de la partida no puede ser nulo."));
+        }
+
+        return gameRepository.findById(gameId)
+                .switchIfEmpty(Mono.error(new GameNotFoundException("No se encontró la partida con ID: " + gameId)))
+                .flatMap(gameRepository::delete)
+                .then();
+    }
+
+    @Override
+    public Flux<GameHistory> getPlayerHistory(UUID playerId) {
+        if (playerId == null) {
+            return Flux.error(new InvalidActionException("El ID del jugador es obligatorio."));
+        }
+
+        return gameHistoryService.getPlayerHistory(playerId);
     }
 
     @Override
     public Flux<Game> getGamesByStatus(GameStatus status) {
-        return null;
+        if (status == null) {
+            return Flux.error(new InvalidActionException("El estado de la partida no puede ser nulo."));
+        }
+
+        return gameRepository.findByStatus(status);
     }
-
-
-
 
 }

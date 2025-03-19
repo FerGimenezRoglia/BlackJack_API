@@ -37,6 +37,10 @@ public class PlayerServiceImpl implements PlayerService {
      */
     @Override
     public Mono<Void> updatePlayerName(UUID playerId, String newName) {
+        if (newName == null || newName.isBlank()) {
+            return Mono.error(new InvalidActionException("El nombre del jugador no puede estar vacío."));
+        }
+
         return playerRepository.findById(playerId)
                 .switchIfEmpty(Mono.error(new PlayerNotFoundException("Jugador no encontrado con ID: " + playerId)))
                 .flatMap(player -> {
