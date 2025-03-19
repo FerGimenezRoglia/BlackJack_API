@@ -1,9 +1,11 @@
 package cat.itacademy.s05.t01.n01.service;
 
+import cat.itacademy.s05.t01.n01.model.Card;
 import cat.itacademy.s05.t01.n01.model.GameHistory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -17,6 +19,8 @@ public interface GameHistoryService {
      * @return Mono con la partida guardada.
      */
     Mono<GameHistory> saveGameHistory(GameHistory gameHistory);
+
+    List<GameHistory.CardRecord> convertToCardRecord(List<Card> cards);
 
     /**
      * 📌 Obtiene el historial de partidas de un jugador por su ID.

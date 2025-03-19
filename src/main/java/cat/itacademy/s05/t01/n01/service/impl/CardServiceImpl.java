@@ -15,32 +15,36 @@ import java.util.stream.Stream;
 public class CardServiceImpl implements CardService {
 
     private static final int DECK_SIZE = 52;
+    private static final List<Card> DECK = Stream.of(Suit.values())
+            .flatMap(suit -> Stream.of(Rank.values())
+                    .map(rank -> new Card(suit, rank)))
+            .collect(Collectors.toList());
+
+    /**
+     * 📌 Extrae una única carta aleatoria del mazo.
+     *
+     * @return Una carta aleatoria.
+     */
+    @Override
+    public Card drawSingleCard() {
+        List<Card> shuffledeck = new ArrayList<>(DECK);
+        Collections.shuffle(shuffledeck);
+        return shuffledeck.get(0);
+    }
 
     /**
      * 📌 Genera una lista de cartas aleatorias desde un mazo de 52 cartas.
+     *
      * @param quantity Número de cartas a extraer.
      * @return Lista de cartas aleatorias.
      */
     @Override
-    public List<Card> drawCards(int quantity) {
-
+    public List<Card> drawMultipleCards(int quantity) {
         if (quantity <= 0 || quantity > DECK_SIZE) {
             throw new InvalidActionException("La cantidad de cartas solicitadas no es válida: " + quantity);
         }
-
-        List<Card> deck = generateDeck();
-        Collections.shuffle(deck);
-        return deck.subList(0, quantity);
-    }
-
-    /**
-     * 📌 Genera un mazo completo de 52 cartas.
-     * @return Lista de cartas sin mezclar.
-     */
-    private List<Card> generateDeck() {
-        return Stream.of(Suit.values())
-                .flatMap(suit -> Stream.of(Rank.values())
-                        .map(rank -> new Card(suit, rank)))
-                .collect(Collectors.toList());
+        List<Card> shuffledDeck = new ArrayList<>(DECK); // Copiamos el mazo original
+        Collections.shuffle(shuffledDeck); // Mezclamos
+        return shuffledDeck.subList(0, Math.min(quantity, DECK_SIZE)); // Sacamos `quantity` cartas
     }
 }
