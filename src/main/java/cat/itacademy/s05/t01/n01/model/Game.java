@@ -18,7 +18,6 @@ public class Game {
 
     @Id  // 📌 Indica que este es el ID de la tabla (Spring Data)
     private UUID id; // 📌 UUID como identificador único (se guarda como `BINARY(16)` en MySQL)
-
     private GameStatus status; // 📌 Estado del juego (`IN_PROGRESS`, `FINISHED`)
 
     private List<Card> playerCards = new ArrayList<>(); // 📌 Cartas del jugador

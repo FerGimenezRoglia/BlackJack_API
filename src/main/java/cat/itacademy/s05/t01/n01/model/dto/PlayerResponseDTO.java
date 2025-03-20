@@ -16,4 +16,5 @@ public class PlayerResponseDTO {
         this.name = player.getName();
         this.totalWins = player.getTotalWins();
     }
+
 }

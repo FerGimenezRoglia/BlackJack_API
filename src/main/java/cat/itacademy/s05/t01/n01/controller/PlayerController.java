@@ -2,7 +2,6 @@ package cat.itacademy.s05.t01.n01.controller;
 
 import cat.itacademy.s05.t01.n01.model.dto.PlayerResponseDTO;
 import cat.itacademy.s05.t01.n01.model.dto.PlayerUpdateRequestDTO;
-import cat.itacademy.s05.t01.n01.model.Player;
 import cat.itacademy.s05.t01.n01.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

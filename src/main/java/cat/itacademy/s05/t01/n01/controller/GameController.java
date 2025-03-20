@@ -30,7 +30,7 @@ public class GameController {
     @PostMapping("/new")
     public Mono<ResponseEntity<Game>> createGame(@RequestParam String playerName) {
         return gameService.createGame(playerName)
-                .map(ResponseEntity::ok);
+                .map(game -> ResponseEntity.ok().body(game));
     }
 
     /**
