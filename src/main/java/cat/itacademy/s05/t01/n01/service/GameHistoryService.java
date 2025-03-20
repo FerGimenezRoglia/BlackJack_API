@@ -27,5 +27,5 @@ public interface GameHistoryService {
      * @param playerId ID del jugador.
      * @return Flux con las partidas jugadas por el jugador.
      */
-    Flux<GameHistory> getPlayerHistory(UUID playerId);
+    Flux<GameHistory> getPlayerHistory(String playerId);
 }

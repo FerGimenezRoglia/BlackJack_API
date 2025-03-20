@@ -1,10 +1,12 @@
 package cat.itacademy.s05.t01.n01.service.impl;
 
+import cat.itacademy.s05.t01.n01.exception.GameHistoryNotFoundException;
 import cat.itacademy.s05.t01.n01.exception.GameNotFoundException;
 import cat.itacademy.s05.t01.n01.exception.InvalidActionException;
 import cat.itacademy.s05.t01.n01.model.*;
 import cat.itacademy.s05.t01.n01.model.enums.GameStatus;
 import cat.itacademy.s05.t01.n01.model.enums.PlayerAction;
+import cat.itacademy.s05.t01.n01.repository.GameHistoryRepository;
 import cat.itacademy.s05.t01.n01.repository.GameRepository;
 import cat.itacademy.s05.t01.n01.repository.PlayerGameRepository;
 import cat.itacademy.s05.t01.n01.service.*;
@@ -26,15 +28,17 @@ public class GameServiceImpl implements GameService {
     private final GamePlayService gamePlayService;
     private final CardService cardService;
     private final GameHistoryService gameHistoryService;
+    private final GameHistoryRepository gameHistoryRepository;
 
     @Autowired
-    public GameServiceImpl(GameRepository gameRepository, PlayerService playerService, PlayerGameRepository playerGameRepository, GamePlayService gamePlayService, CardService cardService, GameHistoryService gameHistoryService) {
+    public GameServiceImpl(GameRepository gameRepository, PlayerService playerService, PlayerGameRepository playerGameRepository, GamePlayService gamePlayService, CardService cardService, GameHistoryService gameHistoryService, GameHistoryRepository gameHistoryRepository) {
         this.gameRepository = gameRepository;
         this.playerService = playerService;
         this.playerGameRepository = playerGameRepository;
         this.gamePlayService = gamePlayService;
         this.cardService = cardService;
         this.gameHistoryService = gameHistoryService;
+        this.gameHistoryRepository = gameHistoryRepository;
     }
 
     @Override
@@ -132,12 +136,12 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Flux<GameHistory> getPlayerHistory(UUID playerId) {
+    public Flux<GameHistory> getPlayerHistory(String playerId) {
         if (playerId == null) {
             return Flux.error(new InvalidActionException("El ID del jugador es obligatorio."));
         }
-
-        return gameHistoryService.getPlayerHistory(playerId);
+        return gameHistoryRepository.findByPlayerId(playerId)
+                .switchIfEmpty(Flux.error(new GameHistoryNotFoundException("No hay partidas registradas para este jugador.")));
     }
 
     @Override

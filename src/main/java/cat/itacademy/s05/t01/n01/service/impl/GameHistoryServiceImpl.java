@@ -57,12 +57,12 @@ public class GameHistoryServiceImpl implements GameHistoryService {
      * 📌 Obtiene el historial de partidas de un jugador. Si no hay historial, devuelve un error.
      */
     @Override
-    public Flux<GameHistory> getPlayerHistory(UUID playerId) {
+    public Flux<GameHistory> getPlayerHistory(String playerId) {
         if (playerId == null) {
             return Flux.error(new InvalidActionException("El ID del jugador es obligatorio."));
         }
 
-        return gameHistoryRepository.findByPlayerId(playerId.toString())
+        return gameHistoryRepository.findByPlayerId(playerId)
                 .switchIfEmpty(Flux.error(new GameHistoryNotFoundException("No hay partidas registradas para este jugador.")));
     }
 }

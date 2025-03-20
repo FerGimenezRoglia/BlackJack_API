@@ -42,7 +42,7 @@ public interface GameService {
      * @param playerId ID del jugador.
      * @return Flux con el historial de partidas.
      */
-    Flux<GameHistory> getPlayerHistory(UUID playerId);
+    Flux<GameHistory> getPlayerHistory(String playerId);
 
     /**
      * 📌 Obtiene todas las partidas según su estado (IN_PROGRESS, FINISHED).

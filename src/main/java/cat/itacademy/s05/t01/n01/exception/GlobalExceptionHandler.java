@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * Manejador global de excepciones para la API.
- * Captura y responde adecuadamente a las excepciones personalizadas y generales.
+ *  **GlobalExceptionHandler - Manejador centralizado de excepciones**
+ *
+ * 📌 Captura y maneja excepciones específicas y generales en la API.
+ * 📌 Responde con códigos de estado HTTP adecuados según el error detectado.
+ * 📌 Mejora la organización del código evitando `try-catch` repetitivos en los controladores.
  *
  * @author Fer_Develop
  */
@@ -15,9 +18,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     /**
-     * Maneja la excepción cuando una partida no es encontrada.
+     *  **Excepción: Partida no encontrada**
+     *
+     * 📌 Se lanza cuando se intenta acceder a una partida inexistente.
      * @param ex Excepción específica de juego no encontrado.
-     * @return ResponseEntity con mensaje de error y estado 404.
+     * @return `404 Not Found` con un mensaje descriptivo.
      */
     @ExceptionHandler(GameNotFoundException.class)
     public ResponseEntity<String> handleGameNotFoundException(GameNotFoundException ex) {
@@ -25,9 +30,11 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Maneja la excepción cuando un jugador no es encontrado.
+     *  **Excepción: Jugador no encontrado**
+     *
+     * 📌 Se activa cuando no se encuentra un jugador en la base de datos.
      * @param ex Excepción específica de jugador no encontrado.
-     * @return ResponseEntity con mensaje de error y estado 404.
+     * @return `404 Not Found` con un mensaje explicativo.
      */
     @ExceptionHandler(PlayerNotFoundException.class)
     public ResponseEntity<String> handlePlayerNotFoundException(PlayerNotFoundException ex) {
@@ -35,22 +42,35 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 📌 Maneja intentos de buscar un historial de juego que no existe.
+     *  **Excepción: Historial de partidas no encontrado**
+     *
+     * 📌 Ocurre cuando se intenta consultar el historial de un jugador sin registros previos.
+     * @param ex Excepción de historial de juego no encontrado.
+     * @return `404 Not Found` con un mensaje informativo.
      */
     @ExceptionHandler(GameHistoryNotFoundException.class)
     public ResponseEntity<String> handleGameHistoryNotFound(GameHistoryNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
+    /**
+     * ⚠ **Excepción: Jugador duplicado**
+     *
+     * 📌 Se lanza cuando se intenta registrar un jugador con un nombre ya existente.
+     * @param ex Excepción específica de duplicación de jugador.
+     * @return `409 Conflict` con un mensaje de error.
+     */
     @ExceptionHandler(DuplicatePlayerException.class)
     public ResponseEntity<String> handleDuplicatePlayerException(DuplicatePlayerException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
     /**
-     * Maneja intentos de acciones inválidas en el juego.
+     *  **Excepción: Acción inválida en el juego**
+     *
+     * 📌 Se activa cuando el usuario intenta realizar una acción no permitida (ej: acción desconocida en Blackjack).
      * @param ex Excepción de acción inválida.
-     * @return ResponseEntity con mensaje de error y estado 400.
+     * @return `400 Bad Request` con detalles del error.
      */
     @ExceptionHandler(InvalidActionException.class)
     public ResponseEntity<String> handleInvalidActionException(InvalidActionException ex) {
@@ -58,9 +78,25 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Manejo genérico de excepciones no controladas.
-     * @param ex Excepción desconocida.
-     * @return ResponseEntity con mensaje de error y estado 500.
+     *  **Excepción: UUID con formato incorrecto**
+     *
+     * 📌 Se lanza cuando un identificador UUID no tiene el formato adecuado.
+     * @param ex Excepción generada por un argumento inválido.
+     * @return `400 Bad Request` con un mensaje de error detallado.
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<String> handleInvalidUUIDException(MethodArgumentTypeMismatchException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("El formato del UUID proporcionado no es válido: " + ex.getMessage());
+    }
+
+    /**
+     * ⚠ **Excepción: Error inesperado**
+     *
+     * 📌 Captura cualquier error no controlado dentro de la API.
+     * 📌 Se usa como un "catch-all" para evitar exponer detalles sensibles al usuario.
+     * @param ex Excepción genérica no manejada previamente.
+     * @return `500 Internal Server Error` con un mensaje de error genérico.
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(Exception ex) {
