@@ -2,6 +2,7 @@ package cat.itacademy.s05.t01.n01.controller;
 
 import cat.itacademy.s05.t01.n01.model.Game;
 import cat.itacademy.s05.t01.n01.model.GameHistory;
+import cat.itacademy.s05.t01.n01.model.dto.GameResponseDTO;
 import cat.itacademy.s05.t01.n01.model.enums.GameStatus;
 import cat.itacademy.s05.t01.n01.service.GameService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,9 +34,9 @@ public class GameController {
             @ApiResponse(responseCode = "400", description = "Error en la solicitud")
     })
     @PostMapping("/new")
-    public Mono<ResponseEntity<Game>> createGame(@RequestParam String playerName) {
+    public Mono<ResponseEntity<GameResponseDTO>> createGame(@RequestParam String playerName) {
         return gameService.createGame(playerName)
-                .map(game -> ResponseEntity.status(201).body(game));
+                .map(game -> ResponseEntity.status(201).body(new GameResponseDTO(game)));
     }
 
     @Operation(summary = "Obtener detalles de una partida", description = "Recupera los datos de una partida específica según su UUID.")
@@ -44,9 +45,9 @@ public class GameController {
             @ApiResponse(responseCode = "404", description = "Partida no encontrada")
     })
     @GetMapping("/{id}")
-    public Mono<ResponseEntity<Game>> getGameById(@PathVariable @Valid UUID id) {
+    public Mono<ResponseEntity<GameResponseDTO>> getGameById(@PathVariable @Valid UUID id) {
         return gameService.getGameById(id)
-                .map(ResponseEntity::ok);
+                .map(game -> ResponseEntity.ok(new GameResponseDTO(game)));
     }
 
     @Operation(summary = "Realizar una jugada en la partida", description = "El jugador puede realizar una acción en el juego. Las acciones permitidas son: 'HIT' (pedir carta) o 'STAND' (plantarse).")
@@ -56,9 +57,9 @@ public class GameController {
             @ApiResponse(responseCode = "404", description = "Partida no encontrada")
     })
     @PostMapping("/{id}/play")
-    public Mono<ResponseEntity<Game>> playGame(@PathVariable @Valid UUID id, @RequestParam String action) {
+    public Mono<ResponseEntity<GameResponseDTO>> playGame(@PathVariable @Valid UUID id, @RequestParam String action) {
         return gameService.playGame(id, action)
-                .map(ResponseEntity::ok);
+                .map(game -> ResponseEntity.ok(new GameResponseDTO(game)));
     }
 
     @Operation(summary = "Eliminar una partida", description = "Permite eliminar una partida activa mediante su UUID.")
