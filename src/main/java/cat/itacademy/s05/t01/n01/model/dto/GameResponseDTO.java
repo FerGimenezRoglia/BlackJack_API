@@ -16,15 +16,15 @@ import java.util.stream.Collectors;
 @Getter
 public class GameResponseDTO {
     private final String id;
-    private final GameStatus status;
+    private final String status;
     private final List<CardResponseDTO> playerCards;
     private final List<CardResponseDTO> dealerCards;
     private final String winner;
     private final LocalDateTime createdAt;
 
     public GameResponseDTO(Game game) {
-        this.id = game.getId().toString();
-        this.status = game.getStatus();
+        this.id = game.getId() != null ? game.getId().toString() : null;
+        this.status = game.getStatus().toString();
         this.playerCards = game.getPlayerCards().stream().map(CardResponseDTO::new).collect(Collectors.toList());
         this.dealerCards = game.getDealerCards().stream().map(CardResponseDTO::new).collect(Collectors.toList());
         this.winner = game.getWinner();

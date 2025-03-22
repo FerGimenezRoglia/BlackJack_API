@@ -43,7 +43,7 @@ public class GamePlayServiceImpl implements GamePlayService {
             return gameRepository.save(game);
         }
 
-        // 🔹 Guardamos el historial en MongoDB
+        // Guardamos el historial en MongoDB
         return gameRepository.save(game)
                 .flatMap(savedGame -> saveFinalGameHistory(savedGame)
                         .thenReturn(savedGame));
@@ -111,12 +111,12 @@ public class GamePlayServiceImpl implements GamePlayService {
     }
 
     /**
-     * 📌 Guarda la partida final en el historial de MongoDB.
+     * Guarda la partida final en el historial de MongoDB.
      */
     private Mono<Void> saveFinalGameHistory(Game game) {
         GameHistory history = GameHistory.builder()
-                .gameId(game.getId())
-                .playerId(null) // 🔹 Si la partida finalizó, el playerId no es relevante
+                .gameId(game.getId().toString())
+                .playerId(null) // Si la partida finalizó, el playerId no es relevante
                 .playerCards(gameHistoryService.convertToCardRecord(game.getPlayerCards()))
                 .dealerCards(gameHistoryService.convertToCardRecord(game.getDealerCards()))
                 .gameResult("FINISHED")
@@ -126,6 +126,5 @@ public class GamePlayServiceImpl implements GamePlayService {
                 .build();
         return gameHistoryService.saveGameHistory(history).then();
     }
-
 
 }

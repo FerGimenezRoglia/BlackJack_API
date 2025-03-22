@@ -75,7 +75,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     /**
-     * 📌 Método auxiliar para crear y guardar un nuevo jugador
+     *  Método auxiliar para crear y guardar un nuevo jugador
      */
     private Mono<Player> createAndSavePlayer(String playerName) {
         Player newPlayer = new Player(UUID.randomUUID(), playerName, 0, 0);

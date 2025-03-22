@@ -23,9 +23,9 @@ public class GameHistory {
     @Id  // 📌 Identificador único generado automáticamente
     private String id;
 
-    private UUID gameId; // 📌 ID de la partida en MySQL para vinculación
+    private String gameId; // 📌 ID de la partida en MySQL para vinculación
 
-    private UUID playerId; // 📌 ID del jugador
+    private String playerId; // 📌 ID del jugador
 
     private List<CardRecord> playerCards; // 📌 Cartas del jugador
 

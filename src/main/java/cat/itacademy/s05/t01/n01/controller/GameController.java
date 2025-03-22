@@ -2,6 +2,7 @@ package cat.itacademy.s05.t01.n01.controller;
 
 import cat.itacademy.s05.t01.n01.model.Game;
 import cat.itacademy.s05.t01.n01.model.GameHistory;
+import cat.itacademy.s05.t01.n01.model.dto.GameHistoryResponseDTO;
 import cat.itacademy.s05.t01.n01.model.dto.GameResponseDTO;
 import cat.itacademy.s05.t01.n01.model.enums.GameStatus;
 import cat.itacademy.s05.t01.n01.service.GameService;
@@ -36,7 +37,7 @@ public class GameController {
     @PostMapping("/new")
     public Mono<ResponseEntity<GameResponseDTO>> createGame(@RequestParam String playerName) {
         return gameService.createGame(playerName)
-                .map(game -> ResponseEntity.status(201).body(new GameResponseDTO(game)));
+                .map(ResponseEntity::ok);
     }
 
     @Operation(summary = "Obtener detalles de una partida", description = "Recupera los datos de una partida específica según su UUID.")
@@ -47,7 +48,7 @@ public class GameController {
     @GetMapping("/{id}")
     public Mono<ResponseEntity<GameResponseDTO>> getGameById(@PathVariable @Valid UUID id) {
         return gameService.getGameById(id)
-                .map(game -> ResponseEntity.ok(new GameResponseDTO(game)));
+                .map(ResponseEntity::ok);
     }
 
     @Operation(summary = "Realizar una jugada en la partida", description = "El jugador puede realizar una acción en el juego. Las acciones permitidas son: 'HIT' (pedir carta) o 'STAND' (plantarse).")
@@ -59,7 +60,7 @@ public class GameController {
     @PostMapping("/{id}/play")
     public Mono<ResponseEntity<GameResponseDTO>> playGame(@PathVariable @Valid UUID id, @RequestParam String action) {
         return gameService.playGame(id, action)
-                .map(game -> ResponseEntity.ok(new GameResponseDTO(game)));
+                .map(ResponseEntity::ok);
     }
 
     @Operation(summary = "Eliminar una partida", description = "Permite eliminar una partida activa mediante su UUID.")
@@ -79,7 +80,7 @@ public class GameController {
             @ApiResponse(responseCode = "400", description = "Estado inválido")
     })
     @GetMapping("/status/{status}")
-    public Flux<Game> getGamesByStatus(@PathVariable String status) {
+    public Flux<GameResponseDTO> getGamesByStatus(@PathVariable String status) {
         return gameService.getGamesByStatus(GameStatus.valueOf(status.toUpperCase()));
     }
 
@@ -89,7 +90,7 @@ public class GameController {
             @ApiResponse(responseCode = "404", description = "No se encontraron partidas en el historial del jugador")
     })
     @GetMapping("/history/{playerId}")
-    public Flux<GameHistory> getPlayerHistory(@PathVariable UUID playerId) {
+    public Flux<GameHistoryResponseDTO> getPlayerHistory(@PathVariable UUID playerId) {
         return gameService.getPlayerHistory(playerId.toString());
     }
 }

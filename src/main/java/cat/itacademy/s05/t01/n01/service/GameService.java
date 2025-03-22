@@ -2,7 +2,8 @@ package cat.itacademy.s05.t01.n01.service;
 
 import cat.itacademy.s05.t01.n01.model.Game;
 import cat.itacademy.s05.t01.n01.model.GameHistory;
-import cat.itacademy.s05.t01.n01.model.Player;
+import cat.itacademy.s05.t01.n01.model.dto.GameHistoryResponseDTO;
+import cat.itacademy.s05.t01.n01.model.dto.GameResponseDTO;
 import cat.itacademy.s05.t01.n01.model.enums.GameStatus;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -19,16 +20,16 @@ public interface GameService {
      * @param playerName Nombre del jugador.
      * @return Mono con la partida creada.
      */
-    Mono<Game> createGame(String playerName);
+    Mono<GameResponseDTO> createGame(String playerName);
 
     /**
      * 📌 Obtiene los detalles de una partida específica.
      * @param gameId ID de la partida.
      * @return Mono con la partida encontrada.
      */
-    Mono<Game> getGameById(UUID gameId);
+    Mono<GameResponseDTO> getGameById(UUID gameId);
 
-    Mono<Game> playGame(UUID gameId, String action);
+    Mono<GameResponseDTO> playGame(UUID gameId, String action);
 
     /**
      * 📌 Elimina una partida específica.
@@ -42,12 +43,12 @@ public interface GameService {
      * @param playerId ID del jugador.
      * @return Flux con el historial de partidas.
      */
-    Flux<GameHistory> getPlayerHistory(String playerId);
+    Flux<GameHistoryResponseDTO> getPlayerHistory(String playerId);
 
     /**
      * 📌 Obtiene todas las partidas según su estado (IN_PROGRESS, FINISHED).
      * @param status Estado de las partidas.
      * @return Flujo con las partidas encontradas.
      */
-    Flux<Game> getGamesByStatus(GameStatus status);
+    Flux<GameResponseDTO> getGamesByStatus(GameStatus status);
 }
