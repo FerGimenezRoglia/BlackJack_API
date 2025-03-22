@@ -13,11 +13,13 @@ import lombok.Getter;
 @Getter
 public class CardResponseDTO {
     private final String id;
+    private final String gameId;
     private final Suit suit;
     private final Rank rank;
 
     public CardResponseDTO(Card card) {
-        this.id = card.getId().toString();
+        this.id = card.getId() != null ? card.getId().toString() : null;
+        this.gameId = card.getGameId() != null ? card.getGameId().toString() : null;
         this.suit = card.getSuit();
         this.rank = card.getRank();
     }

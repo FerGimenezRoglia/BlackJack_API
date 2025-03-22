@@ -49,6 +49,7 @@ public class GameServiceImpl implements GameService {
                 .flatMap(player -> {
                     Game newGame = Game.builder()
                             .id(UUID.randomUUID())
+                            .playerId(player.getId())
                             .status(GameStatus.IN_PROGRESS)
                             .playerCards(new ArrayList<>(cardService.drawMultipleCards(2)))
                             .dealerCards(new ArrayList<>(cardService.drawMultipleCards(2)))
@@ -56,7 +57,7 @@ public class GameServiceImpl implements GameService {
                             .build();
                     return gameRepository.save(newGame)
                             .flatMap(savedGame -> linkPlayerToGame(player.getId(), savedGame.getId())
-                                    .then(saveGameHistory(savedGame, player.getId()))
+                                    .then(saveGameHistory(savedGame))
                                     .thenReturn(new GameResponseDTO(savedGame)));
                 });
     }
@@ -72,15 +73,16 @@ public class GameServiceImpl implements GameService {
     /**
      * Método para guardar el estado inicial de la partida en MongoDB.
      */
-    private Mono<Void> saveGameHistory(Game game, UUID playerId) {
+    private Mono<Void> saveGameHistory(Game game) {
         GameHistory history = GameHistory.builder()
                 .gameId(game.getId().toString())
-                .playerId(playerId.toString())
+                .playerId(game.getPlayerId().toString())
                 .playerCards(gameHistoryService.convertToCardRecord(game.getPlayerCards()))
                 .dealerCards(gameHistoryService.convertToCardRecord(game.getDealerCards()))
                 .gameResult("IN_PROGRESS")
                 .timestamp(LocalDateTime.now())
                 .build();
+
         return gameHistoryService.saveGameHistory(history).then();
     }
 
@@ -157,8 +159,8 @@ public class GameServiceImpl implements GameService {
      */
     private GameHistoryResponseDTO convertToResponseDTO(GameHistory history) {
         return new GameHistoryResponseDTO(
-                history.getGameId().toString(),
-                history.getPlayerId().toString(),
+                history.getGameId(),
+                history.getPlayerId(),
                 history.getPlayerCards(),
                 history.getDealerCards(),
                 history.getGameResult(),

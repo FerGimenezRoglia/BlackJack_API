@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 public class PlayerResponseDTO {
-    private final String id;  // 🔹 Convertimos UUID a String
+    private final String id;
     private final String name;
     private final int totalWins;
 

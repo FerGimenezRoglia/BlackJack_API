@@ -116,11 +116,11 @@ public class GamePlayServiceImpl implements GamePlayService {
     private Mono<Void> saveFinalGameHistory(Game game) {
         GameHistory history = GameHistory.builder()
                 .gameId(game.getId().toString())
-                .playerId(null) // Si la partida finalizó, el playerId no es relevante
+                .playerId(game.getPlayerId().toString())
                 .playerCards(gameHistoryService.convertToCardRecord(game.getPlayerCards()))
                 .dealerCards(gameHistoryService.convertToCardRecord(game.getDealerCards()))
                 .gameResult("FINISHED")
-                .winnerId(game.getWinner().equals("PLAYER") ? game.getId().toString() : "DEALER")
+                .winnerId(game.getWinner().equals("PLAYER") ? game.getPlayerId().toString() : "DEALER")
                 .winnerType(game.getWinner())
                 .timestamp(LocalDateTime.now())
                 .build();

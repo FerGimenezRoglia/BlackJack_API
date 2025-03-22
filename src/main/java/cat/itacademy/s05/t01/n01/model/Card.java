@@ -18,7 +18,7 @@ import java.util.UUID;
 @Table("game_card") // 📌 Mapeo a la tabla `game_card` en MySQL
 public class Card {
 
-    @Id // 📌 Identificador único de la carta
+    @Id
     private UUID id;
 
     private UUID gameId; // 📌 Relación con la partida en la que se jugó esta carta
