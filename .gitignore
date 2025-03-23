@@ -1,0 +1,139 @@
+# Ignorar TODO por defecto
+*
+
+# Permitir archivos clave
+!.gitignore
+!mvnw
+!mvnw.cmd
+!.mvn/
+!.mvn/**
+
+# Permitir archivo de configuración Maven
+!pom.xml
+
+# Permitir carpeta resources
+!src/
+!src/main/
+!src/main/resources/
+!src/main/resources/**
+
+# Permitir solo el paquete model
+!src/main/java/
+!src/main/java/cat/
+!src/main/java/cat/itacademy/
+!src/main/java/cat/itacademy/s05/
+!src/main/java/cat/itacademy/s05/S05/
+!src/main/java/cat/itacademy/s05/S05/model/
+!src/main/java/cat/itacademy/s05/S05/model/**
+
+# Ignorar cosas innecesarias
+.idea/
+target/
+*.class
+*.log
+*.iml
+.DS_Store
+logs/HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+# Ignorar TODO por defecto
+*
+
+# Permitir estos archivos clave
+!.gitignore
+!mvnw
+!mvnw.cmd
+!.mvn/
+!.mvn/**
+
+# Permitir pom.xml (si querés subirlo desde el inicio)
+!pom.xml
+
+# Permitir estructura específica de src para model y resources
+!src/
+!src/main/
+!src/main/java/
+!src/main/java/cat/
+!src/main/java/cat/itacademy/
+!src/main/java/cat/itacademy/s05/
+!src/main/java/cat/itacademy/s05/S05/
+!src/main/java/cat/itacademy/s05/S05/model/
+!src/main/java/cat/itacademy/s05/S05/model/**
+
+!src/main/resources/
+!src/main/resources/**
+
+# Ignorar cosas de IntelliJ, compilados y archivos generados
+.idea/
+target/
+*.class
+*.log
+*.iml
+.DS_Store
+logs/!**/src/main/**/target/
+!**/src/test/**/target/
+mvnw
+mvnw.cmd
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+# Ignorar TODO por defecto
+*
+
+# Permitir estos archivos clave
+!.gitignore
+!mvnw
+!mvnw.cmd
+!.mvn/
+!.mvn/**
+
+# Permitir pom.xml (si querés subirlo desde el inicio)
+!pom.xml
+
+# Permitir estructura específica de src para model y resources
+!src/
+!src/main/
+!src/main/java/
+!src/main/java/cat/
+!src/main/java/cat/itacademy/
+!src/main/java/cat/itacademy/s05/
+!src/main/java/cat/itacademy/s05/S05/
+!src/main/java/cat/itacademy/s05/S05/model/
+!src/main/java/cat/itacademy/s05/S05/model/**
+
+!src/main/resources/
+!src/main/resources/**
+
+# Ignorar cosas de IntelliJ, compilados y archivos generados
+.idea/
+target/
+*.class
+*.log
+*.iml
+.DS_Store
+logs/
