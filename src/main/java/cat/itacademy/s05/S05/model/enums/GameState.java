@@ -2,7 +2,7 @@ package cat.itacademy.s05.S05.model.enums;
 
 public enum GameState {
     IN_PROGRESS("In Progress"),
-    ENDED("Ended");
+    FINISHED("Ended");
 
     private final String displayName;
 

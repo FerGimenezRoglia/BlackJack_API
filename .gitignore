@@ -25,6 +25,8 @@
 !src/main/java/cat/itacademy/s05/S05/exception/**
 !src/main/java/cat/itacademy/s05/S05/repository/
 !src/main/java/cat/itacademy/s05/S05/repository/**
+!src/main/java/cat/itacademy/s05/S05/service/
+!src/main/java/cat/itacademy/s05/S05/service/**
 !src/main/resources/
 !src/main/resources/**
 

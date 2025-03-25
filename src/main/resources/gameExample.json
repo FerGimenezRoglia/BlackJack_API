@@ -1,0 +1,19 @@
+{
+    "_id": "65f077b1abc12345de123456",
+    "playerName": "Fer",
+    "state": "NEW",
+    "playerHandCards": {
+      "cards": [
+        { "rank": "KING", "suit": "HEARTS" },
+        { "rank": "FIVE", "suit": "CLUBS" }
+      ]
+    },
+    "dealerHandCards": {
+      "cards": []
+    },
+    "winner": null,
+    "deckRemainingCards": [
+      { "rank": "QUEEN", "suit": "DIAMONDS" },
+      ...
+    ]
+  }
