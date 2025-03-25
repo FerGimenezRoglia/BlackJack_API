@@ -18,13 +18,17 @@
 !src/main/resources/**
 
 # Permitir solo el paquete model
+!src/
+!src/main/
 !src/main/java/
 !src/main/java/cat/
 !src/main/java/cat/itacademy/
 !src/main/java/cat/itacademy/s05/
 !src/main/java/cat/itacademy/s05/S05/
-!src/main/java/cat/itacademy/s05/S05/model/
-!src/main/java/cat/itacademy/s05/S05/model/**
+!src/main/java/cat/itacademy/s05/S05/exception/
+!src/main/java/cat/itacademy/s05/S05/exception/**
+!src/main/java/cat/itacademy/s05/S05/repository/
+!src/main/java/cat/itacademy/s05/S05/repository/**
 
 # Ignorar cosas innecesarias
 .idea/
