@@ -27,6 +27,9 @@
 !src/main/java/cat/itacademy/s05/S05/repository/**
 !src/main/java/cat/itacademy/s05/S05/service/
 !src/main/java/cat/itacademy/s05/S05/service/**
+!src/main/java/cat/itacademy/s05/S05/controller/
+!src/main/java/cat/itacademy/s05/S05/controller/**
+!src/main/java/cat/itacademy/s05/S05/Spring5_Tarea1_Application.java
 !src/main/resources/
 !src/main/resources/**
 
