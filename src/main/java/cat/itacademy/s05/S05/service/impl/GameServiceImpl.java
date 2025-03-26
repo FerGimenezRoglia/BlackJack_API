@@ -188,10 +188,9 @@ public class GameServiceImpl implements GameService {
     @Override
     public Mono<Void> deleteGame(String gameId) {
         logger.info("Deleting game with ID: {}", gameId);
-        return gameRepository.deleteById(gameId)
+        return gameRepository.findById(gameId)
                 .switchIfEmpty(Mono.error(new GameNotFoundException("Game not found with ID: " + gameId)))
-                .flatMap(game -> gameRepository.deleteById(gameId))
-                .doOnSuccess(unused -> logger.info("Game with ID {} deleted successfully.", gameId));
-
+                .flatMap(game -> gameRepository.deleteById(gameId)
+                        .doOnSuccess(unused -> logger.info("Game with ID {} deleted successfully.", gameId)));
     }
 }
