@@ -1,0 +1,9 @@
+# Ignorar archivos innecesarios para la imagen Docker target/
+*.iml
+.idea/
+*.class
+*.log
+node_modules/
+docker-compose.yml
+.git
+.gitignore

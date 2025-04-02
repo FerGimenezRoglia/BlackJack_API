@@ -46,6 +46,12 @@
 !src/test/java/cat/itacademy/s05/S05/service/
 !src/test/java/cat/itacademy/s05/S05/service/**
 
+# Archivos importantes a versionar
+!README.md
+!Dockerfile
+!docker-compose.yml
+!.dockerignore
+
 
 # Ignorar cosas innecesarias
 .idea/

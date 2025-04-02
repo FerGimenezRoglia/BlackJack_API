@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - app_network
+
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: blackjack
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_INITDB_SKIP_TZINFO: "1"
+    ports:
+      - "3307:3306"
+    networks:
+      - app_network
+    volumes:
+      - mysql_data:/var/lib/mysql  # Persist MySQL data
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 15s
+      retries: 10
+      timeout: 5s
+
+  app:
+    build: .
+    container_name: blackjack-app
+    depends_on:
+      mysql:
+        condition: service_healthy
+      mongodb:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/blackjack
+      - SPRING_R2DBC_URL=r2dbc:mysql://mysql:3306/blackjack
+      - SPRING_R2DBC_USERNAME=user
+      - SPRING_R2DBC_PASSWORD=password
+    networks:
+      - app_network
+
+networks:
+  app_network:
+
+volumes:
+  mysql_data:
