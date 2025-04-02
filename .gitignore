@@ -33,6 +33,20 @@
 !src/main/resources/
 !src/main/resources/**
 
+# Permitir archivos de test
+!src/test/
+!src/test/java/
+!src/test/java/cat/
+!src/test/java/cat/itacademy/
+!src/test/java/cat/itacademy/s05/
+!src/test/java/cat/itacademy/s05/S05/
+!src/test/java/cat/itacademy/s05/S05/Spring5Tarea1ApplicationTests.java
+!src/test/java/cat/itacademy/s05/S05/controller/
+!src/test/java/cat/itacademy/s05/S05/controller/**
+!src/test/java/cat/itacademy/s05/S05/service/
+!src/test/java/cat/itacademy/s05/S05/service/**
+
+
 # Ignorar cosas innecesarias
 .idea/
 target/
